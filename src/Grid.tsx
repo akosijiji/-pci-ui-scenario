@@ -113,6 +113,8 @@ const NeoGrid = (): JSX.Element => {
       <AgGridReact
         rowData={data}
         defaultColDef={defaultColDef}
+        enableCellTextSelection={true}
+        ensureDomOrder={true}
         columnDefs={columnDefs}
         rowGroupPanelShow={'always'}
       />
