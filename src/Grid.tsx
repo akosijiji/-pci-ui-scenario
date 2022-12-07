@@ -3,6 +3,7 @@ import { ColDef } from "ag-grid-community";
 import data from "./near-earth-asteroids.json";
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-alpine.css";
+import { useCallback, useRef } from 'react';
 
 // enable sorting on all columns by default
 const defaultColDef = {
@@ -105,12 +106,21 @@ const columnDefs: ColDef[] = [
 
 
 const NeoGrid = (): JSX.Element => {
+  
+  const gridRef = useRef<any>(null);
+
+  const clearFilters = useCallback(() => {
+    gridRef.current.api.setFilterModel(null);
+  }, []);
 
   return (
     <div className="ag-theme-alpine" style={{ height: 900, width: 1920 }}>
-      
+      <div style={{ border: '1px dotted black', display: 'flex', alignItems: 'center' }}>
         <h1>Near-Earth Object Overview</h1> 
+        <button style={{ marginLeft: 15, padding: 10 }} onClick={clearFilters}>Clear Filters and Sorters</button>
+      </div>
       <AgGridReact
+        ref={gridRef}
         rowData={data}
         defaultColDef={defaultColDef}
         enableCellTextSelection={true}
